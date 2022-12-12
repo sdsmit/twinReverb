@@ -30,11 +30,11 @@ void GainStages::processFirstStage(juce::AudioBuffer<float>& buffer, float pream
         for (int samp = 0; samp < buffer.getNumSamples(); samp++)
         {
             float x = channelData[samp] * preampGain;
-//            if (x > -1 && x < -0.865)
-//            {
-//                channelDataToWrite[samp] = (-5.425810591023306*pow(x,3))+(-16.277431773069917*pow(x,2))+(-14.726694523196665*x)+(4.792073341150054);
-//            }
-            if (x >= -1 && x < -.7)
+            if (x > -1 && x < -0.865)
+            {
+                channelDataToWrite[samp] = (-5.425810591023306*pow(x,3))+(-16.277431773069917*pow(x,2))+(-14.726694523196665*x)+(4.792073341150054);
+            }
+            if (x > -0.865 && x < -.7)
             {
                 channelDataToWrite[samp] = (5.320931985297205*pow(x,3))+(11.610365212481808*pow(x,2))+(9.396249869305576*x)+(2.163375625354759);
             }
@@ -54,14 +54,14 @@ void GainStages::processFirstStage(juce::AudioBuffer<float>& buffer, float pream
             {
                 channelDataToWrite[samp] = (-2.684731294488553*pow(x,3))+(5.495283187741544*pow(x,2))+(-2.912947989225571*x)+(1.0207000541835167);
             }
-            else if (x >= 0.946/* && x < 0.994*/)
+            else if (x >= 0.946 && x < 0.994)
             {
                 channelDataToWrite[samp] = (14.749890458451176*pow(x,3))+(-43.984173347101404*pow(x,2))+(43.89461789273586*x)+(-13.739285720594987);
             }
-//            else
-//            {
-//                channelDataToWrite[samp] = .92;
-//            }
+            else
+            {
+                channelDataToWrite[samp] = .92;
+            }
         }
     }
 }

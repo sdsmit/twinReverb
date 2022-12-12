@@ -156,10 +156,11 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
     auto gain = treeState.getRawParameterValue(GAIN_STAGE_ONE_ID);
+//    gainStages.processFirstStage(buffer, (float)*gain);
     gainStages.processThirdStage(buffer, (float)*gain);
-    gainStages.processThirdStage(buffer, (float)*gain);
-    gainStages.processThirdStage(buffer, (float)*gain);
-    gainStages.processThirdStage(buffer, (float)*gain);
+//    gainStages.processThirdStage(buffer, (float)*gain);
+//    gainStages.processThirdStage(buffer, (float)*gain);
+//    gainStages.processThirdStage(buffer, (float)*gain);
 }
 
 //==============================================================================
