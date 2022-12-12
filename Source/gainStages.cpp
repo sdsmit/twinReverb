@@ -19,7 +19,7 @@ GainStages::~GainStages()
     
 }
 
-//preAmpGain will be a 0-1 scaler
+//this one is horrible
 void GainStages::processFirstStage(juce::AudioBuffer<float>& buffer, float preampGain)
 {
     for (int channel = 0; channel < buffer.getNumChannels(); channel++)
@@ -66,6 +66,8 @@ void GainStages::processFirstStage(juce::AudioBuffer<float>& buffer, float pream
     }
 }
 
+
+//this one sounds good
 void GainStages::processThirdStage(juce::AudioBuffer<float>& buffer, float preampGain)
 {
     for (int channel = 0; channel < buffer.getNumChannels(); channel++)
