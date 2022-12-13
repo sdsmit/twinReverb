@@ -10,9 +10,14 @@
 
 #include <JuceHeader.h>
 #include "gainStages.h"
+#include "FilterBank.hpp"
 
 #define GAIN_STAGE_ONE_ID "gainStageOne"
 #define GAIN_STAGE_ONE_NAME "GainStageOne"
+#define LOW_SHELF_GAIN_ID "lowShelfGain"
+#define LOW_SHELF_GAIN_NAME "LowShelfGain"
+#define LOW_SHELF_FREQ_ID "lowShelfFreq"
+#define LOW_SHELF_FREQ_NAME "LowShelfFreq"
 
 //==============================================================================
 /**
@@ -64,4 +69,5 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NewProjectAudioProcessor)
     
     GainStages gainStages;
+    LowShelf lowShelf;
 };

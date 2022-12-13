@@ -22,7 +22,10 @@ NewProjectAudioProcessor::NewProjectAudioProcessor()
                      #endif
                        ),
 treeState(*this, nullptr, "PARAMETERS", {
-    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { GAIN_STAGE_ONE_ID, 1 }, GAIN_STAGE_ONE_NAME, juce::NormalisableRange<float> (0.0f, 1.0f), 0.9f) })
+    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { GAIN_STAGE_ONE_ID, 1 }, GAIN_STAGE_ONE_NAME, juce::NormalisableRange<float> (0.0f, 1.0f), 0.9f),
+    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { LOW_SHELF_GAIN_ID, 1 }, LOW_SHELF_GAIN_NAME, juce::NormalisableRange<float> (-20.0f, 40.0f), 0.0f),
+    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { LOW_SHELF_FREQ_ID, 1 }, LOW_SHELF_FREQ_NAME, juce::NormalisableRange<float> (0.0f, 3000.0f), 0.0f)
+})
 #endif
 {
     
@@ -98,8 +101,7 @@ void NewProjectAudioProcessor::changeProgramName (int index, const juce::String&
 //==============================================================================
 void NewProjectAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    lowShelf.setSamplingRate(sampleRate);
 }
 
 void NewProjectAudioProcessor::releaseResources()
@@ -156,10 +158,12 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
     auto gain = treeState.getRawParameterValue(GAIN_STAGE_ONE_ID);
+    auto lowShelfGain = treeState.getRawParameterValue(LOW_SHELF_GAIN_ID);
+    auto lowShelfFreq = treeState.getRawParameterValue(LOW_SHELF_FREQ_ID);
 //    gainStages.processFirstStage(buffer, (float)*gain);
-    gainStages.processThirdStage(buffer, (float)*gain);
-//    gainStages.processThirdStage(buffer, (float)*gain);
-//    gainStages.processThirdStage(buffer, (float)*gain);
+    lowShelf.setS(1);
+    lowShelf.computeCoefs((float)*lowShelfFreq, float(*lowShelfGain));
+    lowShelf.applyFilter(buffer);
 //    gainStages.processThirdStage(buffer, (float)*gain);
 }
 
