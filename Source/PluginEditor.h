@@ -26,7 +26,11 @@ public:
     
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> gainStage1Value;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> lowShelfGainValue;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> lowShelfFreqValue;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> midValue;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> highValue;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> speedValue;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> intensityValue;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> masterValue;
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -38,8 +42,20 @@ private:
     juce::Slider lowShelfGainSlider;
     juce::Label lowShelfGainLabel;
     
-    juce::Slider lowShelfFreqSlider;
-    juce::Label lowShelfFreqLabel;
+    juce::Slider midSlider;
+    juce::Label midLabel;
+    
+    juce::Slider highSlider;
+    juce::Label highLabel;
+    
+    juce::Slider speedSlider;
+    juce::Label speedLabel;
+    
+    juce::Slider intensitySlider;
+    juce::Label intensityLabel;
+    
+    juce::Slider masterSlider;
+    juce::Label masterLabel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NewProjectAudioProcessorEditor)
 };

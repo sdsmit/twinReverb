@@ -115,6 +115,7 @@ void GainStages::processThirdStage(juce::AudioBuffer<float>& buffer, float pream
             {
                 channelDataToWrite[samp] = 0.79;
             }
+            channelDataToWrite[samp] -= .15;
         }
     }
 }

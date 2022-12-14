@@ -23,8 +23,12 @@ NewProjectAudioProcessor::NewProjectAudioProcessor()
                        ),
 treeState(*this, nullptr, "PARAMETERS", {
     std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { GAIN_STAGE_ONE_ID, 1 }, GAIN_STAGE_ONE_NAME, juce::NormalisableRange<float> (0.0f, 1.0f), 0.9f),
-    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { LOW_SHELF_GAIN_ID, 1 }, LOW_SHELF_GAIN_NAME, juce::NormalisableRange<float> (-20.0f, 40.0f), 0.0f),
-    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { LOW_SHELF_FREQ_ID, 1 }, LOW_SHELF_FREQ_NAME, juce::NormalisableRange<float> (0.0f, 3000.0f), 0.0f)
+    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { LOW_SHELF_GAIN_ID, 1 }, LOW_SHELF_GAIN_NAME, juce::NormalisableRange<float> (-100.0f, 3.0f), 0.0f),
+    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { MID_ID, 1 }, MID_NAME, juce::NormalisableRange<float> (0.0f, 3000.0f), 0.5f),
+    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { HIGH_ID, 1 }, HIGH_NAME, juce::NormalisableRange<float> (0.0f, 1.0f), 0.5f),
+    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { SPEED_ID, 1 }, SPEED_NAME, juce::NormalisableRange<float> (0.0f, 1.0f), 0.5f),
+    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { INTENSITY_ID, 1 }, INTENSITY_NAME, juce::NormalisableRange<float> (0.0f, 1.0f), 0.5f),
+    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { MASTER_ID, 1 }, MASTER_NAME, juce::NormalisableRange<float> (0.0f, 1.0f), 0.5f)
 })
 #endif
 {
@@ -159,12 +163,15 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // interleaved by keeping the same state.
     auto gain = treeState.getRawParameterValue(GAIN_STAGE_ONE_ID);
     auto lowShelfGain = treeState.getRawParameterValue(LOW_SHELF_GAIN_ID);
-    auto lowShelfFreq = treeState.getRawParameterValue(LOW_SHELF_FREQ_ID);
+    auto lowShelfFreq = treeState.getRawParameterValue(MID_ID);
 //    gainStages.processFirstStage(buffer, (float)*gain);
-    lowShelf.setS(1);
-    lowShelf.computeCoefs((float)*lowShelfFreq, float(*lowShelfGain));
+    
+    //maps knob to filter lookup, computes coefs
+//    gainStages.processThirdStage(buffer, 0.4);
+    
+    lowShelf.mapKnobToFilter((float)*lowShelfGain);
     lowShelf.applyFilter(buffer);
-//    gainStages.processThirdStage(buffer, (float)*gain);
+    gainStages.processThirdStage(buffer, *gain);
 }
 
 //==============================================================================

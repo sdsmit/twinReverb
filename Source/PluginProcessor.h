@@ -16,8 +16,16 @@
 #define GAIN_STAGE_ONE_NAME "GainStageOne"
 #define LOW_SHELF_GAIN_ID "lowShelfGain"
 #define LOW_SHELF_GAIN_NAME "LowShelfGain"
-#define LOW_SHELF_FREQ_ID "lowShelfFreq"
-#define LOW_SHELF_FREQ_NAME "LowShelfFreq"
+#define MID_ID "midKnob"
+#define MID_NAME "MidKnob"
+#define HIGH_ID "highKnob"
+#define HIGH_NAME "HighKnob"
+#define SPEED_ID "speedKnob"
+#define SPEED_NAME "SpeedKnob"
+#define INTENSITY_ID "intensityKnob"
+#define INTENSITY_NAME "IntensityKnob"
+#define MASTER_ID "masterKnob"
+#define MASTER_NAME "MasterKnob"
 
 //==============================================================================
 /**
