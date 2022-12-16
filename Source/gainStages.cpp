@@ -77,7 +77,7 @@ void GainStages::processThirdStage(juce::AudioBuffer<float>& buffer, float pream
         
         for (int samp = 0; samp < buffer.getNumSamples(); samp++)
         {
-            float x = channelData[samp] * preampGain;
+            float x = channelData[samp] * preampGain * 1.2;
             if (x < -.53)
             {
                 channelDataToWrite[samp] = -0.89;
