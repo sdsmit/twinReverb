@@ -26,7 +26,7 @@ treeState(*this, nullptr, "PARAMETERS", {
     std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { LOW_SHELF_GAIN_ID, 1 }, LOW_SHELF_GAIN_NAME, juce::NormalisableRange<float> (-10.0f, 6.0f), 0.0f),
     std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { MID_ID, 1 }, MID_NAME, juce::NormalisableRange<float> (0.0f, 3000.0f), 0.5f),
     std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { HIGH_ID, 1 }, HIGH_NAME, juce::NormalisableRange<float> (-10.0f, 12.0f), 0.0f),
-    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { SPEED_ID, 1 }, SPEED_NAME, juce::NormalisableRange<float> (0.0f, 1.0f), 0.5f),
+    std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { SPEED_ID, 1 }, SPEED_NAME, juce::NormalisableRange<float> (0.15f, .9f), 0.5f),
     std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { INTENSITY_ID, 1 }, INTENSITY_NAME, juce::NormalisableRange<float> (0.0f, 1.0f), 0.5f),
     std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { MASTER_ID, 1 }, MASTER_NAME, juce::NormalisableRange<float> (0.0f, 1.0f), 0.5f)
 })
@@ -165,6 +165,8 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto gain = treeState.getRawParameterValue(GAIN_STAGE_ONE_ID);
     auto lowShelfGain = treeState.getRawParameterValue(LOW_SHELF_GAIN_ID);
     auto highShelfVal = treeState.getRawParameterValue(HIGH_ID);
+    auto speed = treeState.getRawParameterValue(SPEED_ID);
+    auto depth = treeState.getRawParameterValue(INTENSITY_ID);
 //    gainStages.processFirstStage(buffer, (float)*gain);
     
     //maps knob to filter lookup, computes coefs
@@ -175,6 +177,9 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     highShelf.mapKnobToFilter((float)*highShelfVal);
     highShelf.applyFilter(buffer);
     gainStages.processThirdStage(buffer, *gain);
+    trem.setRate((float)*speed);
+    trem.setDepth((float)*depth);
+    trem.processTrem(buffer);
 }
 
 //==============================================================================

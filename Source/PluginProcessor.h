@@ -11,6 +11,8 @@
 #include <JuceHeader.h>
 #include "gainStages.h"
 #include "FilterBank.hpp"
+#include "Tremolo.hpp"
+
 
 #define GAIN_STAGE_ONE_ID "gainStageOne"
 #define GAIN_STAGE_ONE_NAME "GainStageOne"
@@ -79,4 +81,5 @@ private:
     GainStages gainStages;
     LowShelf lowShelf;
     HighShelf highShelf;
+    Tremolo trem;
 };

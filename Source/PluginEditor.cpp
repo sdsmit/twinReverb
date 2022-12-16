@@ -71,7 +71,7 @@ NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioP
     speedSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     speedSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, false, 70, 20);
     speedSlider.setTextValueSuffix("speed");
-    speedSlider.setRange(0, 3000);
+    speedSlider.setRange(0.15, .9);
     
     addAndMakeVisible(speedLabel);
     speedLabel.attachToComponent(&speedSlider, false);
@@ -82,7 +82,7 @@ NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioP
     intensitySlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     intensitySlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, false, 70, 20);
     intensitySlider.setTextValueSuffix("intensity");
-    intensitySlider.setRange(0, 3000);
+    intensitySlider.setRange(0., .7);
     
     addAndMakeVisible(intensityLabel);
     intensityLabel.attachToComponent(&intensitySlider, false);
