@@ -20,6 +20,7 @@ public:
     
     void processFirstStage(juce::AudioBuffer<float>& buffer, float preampGain);
     void processThirdStage(juce::AudioBuffer<float>& buffer, float preampGain);
+    void processLowGain(juce::AudioBuffer<float>& buffer, float preampGain);
     
 private:
     

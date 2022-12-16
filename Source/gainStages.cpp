@@ -121,3 +121,52 @@ void GainStages::processThirdStage(juce::AudioBuffer<float>& buffer, float pream
 }
 
 
+//this one sounds good
+void GainStages::processLowGain(juce::AudioBuffer<float>& buffer, float preampGain)
+{
+    for (int channel = 0; channel < buffer.getNumChannels(); channel++)
+    {
+        auto channelData = buffer.getReadPointer(channel);
+        auto channelDataToWrite = buffer.getWritePointer(channel);
+        
+        for (int samp = 0; samp < buffer.getNumSamples(); samp++)
+        {
+            float x = channelData[samp] * preampGain;
+            if (x < -.9982361)
+            {
+                channelDataToWrite[samp] = -0.92;
+            }
+            else if (x > -0.9982361 && x < -0.8099695)
+            {
+                channelDataToWrite[samp] = 0.031232236081167566*pow(x,3)+0.09353143661983199*pow(x,2)+1.0453339744209469*x+0.060853098206049165;
+            }
+            else if (x > -0.8099695 && x < -0.3499204)
+            {
+                channelDataToWrite[samp] = -0.009808670976857477*pow(x,3)-0.006194212288173061*pow(x,2)+0.9645592404377544*x+0.039044741240382715;
+            }
+            else if (x > -0.3499204 && x < -0.003321694)
+            {
+                channelDataToWrite[samp] = -0.0563974369207664*pow(x,3)-0.05510129113197003*pow(x,2)+0.9474456558459015*x+0.03704861045177771;
+            }
+            else if (x > -0.003321694 && x < 0.5440722)
+            {
+                channelDataToWrite[samp] = -0.06287450130785989*pow(x,3)-0.05516583560970669*pow(x,2)+0.947445441448897*x+0.037048610214390626;
+                
+            }
+            else if (x > 0.5440722 && x < 0.9372727)
+            {
+                channelDataToWrite[samp] = -0.3117542250860701*pow(x,3)+0.3510597809445028*pow(x,2)+0.7264293765538918*x+0.07713150910198004;
+                
+            }
+            else if (x > 0.9372727 && x < 0.9993369)
+            {
+                channelDataToWrite[samp] = 2.822541776117758*pow(x,3)-8.462010445998043*pow(x,2)+8.986679503449944*x-2.5035708039350886*x;
+            }
+            else
+            {
+                channelDataToWrite[samp] = 0.84;
+            }
+        }
+    }
+}
+

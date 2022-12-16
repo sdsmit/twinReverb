@@ -49,7 +49,7 @@ NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioP
     midSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     midSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, false, 70, 20);
     midSlider.setTextValueSuffix("Mid");
-    midSlider.setRange(0, 3000.0f);
+    midSlider.setRange(0.0, 1.0f);
     
     addAndMakeVisible(midLabel);
     midLabel.attachToComponent(&midSlider, false);
@@ -93,7 +93,7 @@ NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioP
     masterSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     masterSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, false, 70, 20);
     masterSlider.setTextValueSuffix("master");
-    masterSlider.setRange(0, 3000);
+    masterSlider.setRange(0, 1);
     
     addAndMakeVisible(masterLabel);
     masterLabel.attachToComponent(&masterSlider, false);
@@ -108,6 +108,10 @@ NewProjectAudioProcessorEditor::~NewProjectAudioProcessorEditor()
     gainStage1Value = nullptr;
     lowShelfGainValue = nullptr;
     midValue = nullptr;
+    highValue = nullptr;
+    speedValue = nullptr;
+    intensityValue = nullptr;
+    masterValue = nullptr;
 }
 
 //==============================================================================
