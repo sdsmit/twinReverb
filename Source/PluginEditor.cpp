@@ -38,7 +38,7 @@ NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioP
     lowShelfGainSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     lowShelfGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, false, 70, 20);
     lowShelfGainSlider.setTextValueSuffix("Low");
-    lowShelfGainSlider.setRange(-100.0f, 3.0f);
+    lowShelfGainSlider.setRange(-10.0f, 6.0f);
     
     addAndMakeVisible(lowShelfGainLabel);
     lowShelfGainLabel.attachToComponent(&lowShelfGainSlider, false);
@@ -60,7 +60,7 @@ NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioP
     highSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     highSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, false, 70, 20);
     highSlider.setTextValueSuffix("High");
-    highSlider.setRange(0, 3000);
+    highSlider.setRange(-10.0f, 12.0f);
     
     addAndMakeVisible(highLabel);
     highLabel.attachToComponent(&highSlider, false);

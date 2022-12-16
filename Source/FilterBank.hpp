@@ -55,6 +55,7 @@ public:
     void setS(float sIn);
     void computeCoefs(float centerF, float GainDB);
     void applyFilter(juce::AudioBuffer<float>& buffer);
+    void mapKnobToFilter(float knobVal);
     
 private:
     float mb0;

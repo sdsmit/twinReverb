@@ -114,7 +114,7 @@ void HighShelf::setS(float sIn)
 void HighShelf::computeCoefs(float centerF, float GainDB)
 {
     mW_0 = 2 * M_PI * (centerF / mFs);
-    mA = GainDB;
+    mA = pow(10,GainDB/40);
     mAlpha = (sin(mW_0) / 2) * sqrt((mA + (1/mA)) * ((1/mS) - 1) + 2);
     
     mb0 = mA *((mA + 1) + (mA - 1) * cos(mW_0) + 2 * sqrt(mA) * mAlpha);
@@ -147,5 +147,14 @@ void HighShelf::applyFilter(juce::AudioBuffer<float>& buffer)
             channelDataToWrite[samp] = y_0;
         }
     }
+}
+
+void HighShelf::mapKnobToFilter(float knobVal)
+{
+    //map 0-1 to gain/freq pair, probably use some logrithmic scaling thing here
+    float knobClipped = clip(knobVal, 0.01f, 1.0f);
+    float freqMapped = scaleBetween(knobClipped, 1500.0f, 1300.0f, 0.0f, 1.0f);
+    setS(1.0);
+    computeCoefs(freqMapped, knobVal);
 }
 

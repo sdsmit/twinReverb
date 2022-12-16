@@ -78,4 +78,5 @@ private:
     
     GainStages gainStages;
     LowShelf lowShelf;
+    HighShelf highShelf;
 };
