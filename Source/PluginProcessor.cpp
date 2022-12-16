@@ -147,21 +147,9 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
     auto gain = treeState.getRawParameterValue(GAIN_STAGE_ONE_ID);
     auto lowShelfGain = treeState.getRawParameterValue(LOW_SHELF_GAIN_ID);
     auto highShelfVal = treeState.getRawParameterValue(HIGH_ID);
@@ -169,10 +157,7 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto speed = treeState.getRawParameterValue(SPEED_ID);
     auto depth = treeState.getRawParameterValue(INTENSITY_ID);
     auto master = treeState.getRawParameterValue(MASTER_ID);
-//    gainStages.processFirstStage(buffer, (float)*gain);
-    
-    //maps knob to filter lookup, computes coefs
-//    gainStages.processThirdStage(buffer, 0.4);
+
     
     lowShelf.mapKnobToFilter((float)*lowShelfGain);
     lowShelf.applyFilter(buffer);
@@ -189,12 +174,19 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
         }
     }
     
+    // treble
     highShelf.mapKnobToFilter((float)*highShelfVal);
     highShelf.applyFilter(buffer);
+    
+    //pre amp, most of sautration occurs here
     gainStages.processThirdStage(buffer, *gain);
+    
+    //tremolo setup and process
     trem.setRate((float)*speed);
     trem.setDepth((float)*depth);
     trem.processTrem(buffer);
+    
+    //master gain stage, limited saturation occurs here on the twin
     gainStages.processLowGain(buffer, (float)*master);
 }
 

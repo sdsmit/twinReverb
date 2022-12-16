@@ -17,7 +17,7 @@ Tremolo::Tremolo()
 
 Tremolo::~Tremolo()
 {
-    
+    //nothing to do here
 }
 
 void Tremolo::processTrem(juce::AudioBuffer<float>& buffer)
